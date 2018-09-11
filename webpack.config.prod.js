@@ -7,8 +7,8 @@ const WebpackMd5Hash = require('webpack-md5-hash');
 
 const config = require('./config.js');
 
-const PUBLIC_DIR = path.resolve(__dirname, './client/public');
-const SRC_DIR = path.resolve(__dirname, './client/src');
+const PUBLIC_DIR = path.resolve(__dirname, './public');
+const SRC_DIR = path.resolve(__dirname, './src');
 const BUILD_DIR = path.resolve(__dirname, './build');
 const NODE_MODULES_DIR = path.resolve(__dirname, 'node_modules');
 
@@ -105,8 +105,7 @@ module.exports = {
             }
           }
         ]
-      }      Ъ
-
+      }
     ]
   }
 };

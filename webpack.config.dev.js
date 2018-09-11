@@ -3,8 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = require('./config.js');
 
-const PUBLIC_DIR = path.resolve(__dirname, './client/public');
-const SRC_DIR = path.resolve(__dirname, './client/src');
+const PUBLIC_DIR = path.resolve(__dirname, './public');
+const SRC_DIR = path.resolve(__dirname, './src');
 const BUILD_DIR = path.resolve(__dirname, './build');
 
 const htmlPlugin = new HtmlWebpackPlugin({

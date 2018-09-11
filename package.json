@@ -1,7 +1,7 @@
 {
   "name": "eigen-tech-task",
   "version": "1.0.0",
-  "main": "/client/src/index.js",
+  "main": "/src/index.js",
   "author": "Oleg",
   "license": "MIT",
   "dependencies": {
@@ -57,14 +57,14 @@
   "scripts": {
     "start": "npm-run-all --parallel webpack lint:watch test:watch --silent",
     "webpack": "webpack-dev-server --inline --config webpack.config.dev.js",
-    "lint": "esw webpack.config.* client/src client/scripts --color",
+    "lint": "esw webpack.config.* src scripts --color",
     "lint:watch": "yarn run lint --watch",
-    "test": "mocha client/scripts/test './client/src/**/*.test.js' --reporter list --require babel-register",
+    "test": "mocha scripts/test './src/**/*.test.js' --reporter list --require babel-register",
     "test:watch": "yarn run test --watch",
     "share": "lt --port 3000 --subdomain qqpp",
     "clean-build": "rimraf build && mkdir build",
     "prebuild": "npm-run-all clean-build lint test",
-    "build": "babel-node client/scripts/build",
-    "postbuild": "babel-node client/scripts/run-build"
+    "build": "babel-node scripts/build",
+    "postbuild": "babel-node scripts/run-build"
   }
 }

@@ -9,7 +9,7 @@ import config from '~/config';
 /* eslint-disable no-console */
 
 const app = express();
-const BUILD_DIR = path.join(__dirname, '../../build');
+const BUILD_DIR = path.join(__dirname, '../build');
 
 app.use(compression());
 app.use(express.static(BUILD_DIR));

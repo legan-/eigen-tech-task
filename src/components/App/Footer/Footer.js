@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { date } from '~/client/src/helpers';
+import { date } from '~/src/helpers';
 import config from '~/config';
 
 const Footer = () => (
