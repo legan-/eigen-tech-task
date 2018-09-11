@@ -1,0 +1,18 @@
+=transition($prop: all, $duration: 0.2s, $delay: 0s)
+  -webkit-transition: $prop $duration ease-in-out $delay
+  -moz-transition:    $prop $duration ease-in-out $delay
+  -o-transition:      $prop $duration ease-in-out $delay
+  transition:         $prop $duration ease-in-out $delay
+
+=gradient($color1, $color2, $position, $size)
+  background: $color2
+  background-image: -webkit-radial-gradient($position, circle cover, $color1 0%, $color2 $size)
+  background-image:    -moz-radial-gradient($position, circle cover, $color1 0%, $color2 $size)
+  background-image:      -o-radial-gradient($position, circle cover, $color1 0%, $color2 $size)
+  background-image:     -ms-radial-gradient($position, circle cover, $color1 0%, $color2 $size)
+  background-image:         radial-gradient($position, circle cover, $color1 0%, $color2 $size)
+
+=shadow($color: rgba(#333, .1), $blur: 10px, $spread: 0px, $x: 0px, $y: 0px)
+  -webkit-box-shadow: $x $y $blur $spread $color
+  -moz-box-shadow:    $x $y $blur $spread $color
+  box-shadow:         $x $y $blur $spread $color
