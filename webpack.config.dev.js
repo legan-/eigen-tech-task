@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = require('./config.js');
@@ -14,6 +15,8 @@ const htmlPlugin = new HtmlWebpackPlugin({
   title: config.name
 });
 
+const hmrPlugin = new webpack.HotModuleReplacementPlugin();
+
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
@@ -25,9 +28,11 @@ module.exports = {
     filename: 'bundle.js'
   },
   devServer: {
-    host: 'localhost',
+    host: config.host,
     port: config.devPort,
+    inline: true,
     disableHostCheck: true,
+    hot: true,
     stats: {
       chunks: false,
       chunkGroups: false,
@@ -37,19 +42,21 @@ module.exports = {
       children: false,
     },
   },
-  plugins: [htmlPlugin],
+  plugins: [htmlPlugin, hmrPlugin],
   module: {
     rules: [
       {
         enforce: 'pre',
         test: /\.js$/,
         exclude: /node_modules/,
+        include: SRC_DIR,
         loader: 'eslint-loader'
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        include: SRC_DIR,
+        loader: 'babel-loader',
       },
       {
         test: /\.sass$/,

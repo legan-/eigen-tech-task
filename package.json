@@ -9,13 +9,14 @@
     "babel-loader": "^7.1.5",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
     "enzyme-adapter-react-16": "^1.3.0",
     "express": "^4.16.3",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-hot-loader": "^4.0.0",
     "webpack": "^4.17.1"
   },
   "devDependencies": {
@@ -56,7 +57,7 @@
   },
   "scripts": {
     "start": "npm-run-all --parallel webpack lint:watch test:watch --silent",
-    "webpack": "webpack-dev-server --inline --config webpack.config.dev.js",
+    "webpack": "webpack-dev-server --config webpack.config.dev.js",
     "lint": "esw webpack.config.* src scripts --color",
     "lint:watch": "yarn run lint --watch",
     "test": "mocha scripts/test './src/**/*.test.js' --reporter list --require babel-register",

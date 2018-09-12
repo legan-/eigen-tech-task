@@ -1,7 +1,8 @@
 import React from 'react';
+import { hot } from 'react-hot-loader';
 
 import Header from '../Header';
-import Content from '~/src/Containers/Content';
+import Content from '~/src/containers/Content';
 import Footer from '../Footer';
 
 const App = () => (
@@ -12,4 +13,4 @@ const App = () => (
   </div>
 );
 
-export default App;
+export default hot(module)(App);
