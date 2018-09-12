@@ -12,8 +12,8 @@ describe('Main', () => {
     const component = shallow(<Main />);
     const componentClassName = 'main';
 
-    it(`should have "${ componentClassName }" tag`, () => {
+    it(`should have "${ componentClassName }" class name`, () => {
       expect(component.hasClass(componentClassName)).toBe(true);
-    });
+    });  
   });
 });

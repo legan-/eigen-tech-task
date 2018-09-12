@@ -33,6 +33,7 @@
     "no-alert": 1,
     "no-duplicate-imports": 1,
     "no-multi-spaces": 1,
+    "no-unused-vars": 1,
     "object-curly-spacing": [1, "always"],
     "prefer-const": 1,
     "quotes": [2, "single"],
