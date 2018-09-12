@@ -17,8 +17,24 @@ describe('Helper', () => {
     `;
 
     const splittedText = splitText(text);
-    it('should split text correctly', () => {
-      expect(splittedText).toHaveLength(4);
+
+    it('should should have header and body', () => {
+      expect(Object.keys(splittedText)).toEqual(['header', 'body']);
     });
+
+    it('should split text correctly', () => {
+      const { body } = splittedText;
+      expect(body.length).toBe(3);
+    });
+
+    it('should have header tag', () => {
+      const { header } = splittedText;
+      expect(header).toContain('Header');
+    });
+
+    it('should have paragraph tag', () => {
+      const { body } = splittedText;
+      expect(body[body.length - 1]).toContain('Paragraph 3');
+    });    
   });
 });

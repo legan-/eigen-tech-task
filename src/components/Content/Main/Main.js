@@ -1,16 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Main = ({ text = [] }) => (
+const Main = ({ header = '', body = [] }) => (
   <div className='main'>
+    <h1>{ header }</h1>
     <div className='text'>
-      { text.map((s, i) => i === 0 ? <h1 key={ i }>{ s }</h1> : <p key={ i } >{ s }</p> ) }
+      { body.map((s, i) => <p key={ i } >{ s }</p> ) }
     </div>
   </div>
 );
 
 Main.propTypes = {
-  text: PropTypes.array
+  header: PropTypes.string.isRequired,
+  body: PropTypes.array.isRequired
 };
 
 export default Main;
