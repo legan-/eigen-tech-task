@@ -9,11 +9,11 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Sidebar', () => {
   describe('component', () => {
-    const wrapper = shallow(<Sidebar />);
-    const wrapperClassName = 'sidebar';
+    const component = shallow(<Sidebar />);
+    const componentClassName = 'sidebar';
 
-    it(`should have "${ wrapperClassName }" tag`, () => {
-      expect(wrapper.hasClass(wrapperClassName)).toBe(true);
+    it(`should have "${ componentClassName }" tag`, () => {
+      expect(component.hasClass(componentClassName)).toBe(true);
     });
   });
 });

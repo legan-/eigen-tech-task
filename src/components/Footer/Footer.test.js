@@ -9,10 +9,10 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Footer', () => {
   describe('component', () => {
-    const wrapper = shallow(<Footer />);
+    const component = shallow(<Footer />);
 
     it('should have "footer" tag', () => {
-      expect(wrapper.type()).toBe('footer');
+      expect(component.type()).toBe('footer');
     });
   });
 });

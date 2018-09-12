@@ -9,11 +9,11 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Header', () => {
   describe('component', () => {
-    const wrapper = shallow(<Header />);
-    const wrapperClassName = 'header';
+    const component = shallow(<Header />);
+    const componentClassName = 'header';
 
-    it(`should have "${ wrapperClassName }" tag`, () => {
-      expect(wrapper.type()).toBe('header');
+    it(`should have "${ componentClassName }" tag`, () => {
+      expect(component.type()).toBe('header');
     });
   });
 });
