@@ -21,6 +21,7 @@ class Content extends Component {
     };
 
     this.mouseListener = this.mouseListener.bind(this);
+    this.hideControls = this.hideControls.bind(this);
   }
 
   mouseListener() {
@@ -36,6 +37,20 @@ class Content extends Component {
   onTextSelected(selection) {
     /* eslint-disable-next-line no-console */
     console.log('show top up', selection.toString());
+
+    this.showControls();
+  }
+
+  showControls() {
+    this.setState({
+      isControlsActive: true
+    });
+  }
+
+  hideControls() {
+    this.setState({
+      isControlsActive: false
+    });
   }
 
   componentDidMount() {
@@ -55,7 +70,7 @@ class Content extends Component {
 
     return (
       <div className='content container'>
-        { isControlsActive && <Controls /> }
+        { isControlsActive && <Controls onBackgroundClick={ this.hideControls } /> }
         <Main { ...text } mouseListener={ this.mouseListener } />
         <Sidebar selects={ selects } />
       </div>

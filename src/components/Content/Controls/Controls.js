@@ -1,12 +1,18 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-const Controls = () => (
+const Controls = ({ onBackgroundClick }) => (
   <div className='controls'>
-    controls
+    <div className='background' onClick={ () => onBackgroundClick() } />
+    <div className='bar'>
+      <button>Add</button>
+      <button>Remove</button>
+    </div>
   </div>
 );
 
-Controls.propTypes = {};
+Controls.propTypes = {
+  onBackgroundClick: PropTypes.func.isRequired
+};
 
 export default Controls;

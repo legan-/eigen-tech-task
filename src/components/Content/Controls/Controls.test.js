@@ -14,6 +14,10 @@ describe('Controls', () => {
 
     it(`should have "${ componentClassName }" class name`, () => {
       expect(component.hasClass(componentClassName)).toBe(true);
+    });
+
+    it('should have two buttons', () => {
+      expect(component.render().find('.bar').children('button')).toHaveLength(2);
     });  
   });
 });
