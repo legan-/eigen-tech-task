@@ -17,7 +17,23 @@ class Content extends Component {
         body: [] 
       },
       isControlsActive: false,
-      selects: []
+      color: 'c-1',
+      selection: {
+        text: '',
+        element: {
+          index: '',
+          tag: ''
+        },
+        position: {
+          top: 0,
+          left: 0,
+        },
+        offset: {
+          anchor: 0,
+          focus: 0
+        }
+      },
+      selections: []
     };
 
     this.mouseListener = this.mouseListener.bind(this);
@@ -35,11 +51,47 @@ class Content extends Component {
   }
 
   onTextSelected(selection) {
-    /* eslint-disable-next-line no-console */
-    console.log('show top up', selection.toString());
-
-    this.showControls();
+    // this.initSelection(selection);
+    this.addSelection(selection);
+    // this.showControls();
   }
+
+  addSelection() {
+    /* eslint-disable-next-line no-console */
+    console.log('selection');
+  }
+
+  // initSelection() {
+  //   const text = selection.toString();
+  //   const parent = selection.anchorNode.parentNode;
+
+  //   const tag = parent.localName;
+
+  //   const index = tag === 'h1' ? -1 : parent.attributes.index.value;
+  //   const anchor = selection.anchorOffset;
+  //   const focus = selection.focusOffset;
+  //   const top = parent.offsetTop;
+  //   const left = parent.offsetLeft;
+
+  //   this.setState(state => ({
+  //     selection: {
+  //       ...state.selection,
+  //       text,
+  //       element: {
+  //         index,
+  //         tag
+  //       },
+  //       position: {
+  //         top,
+  //         left
+  //       },
+  //       offset: {
+  //         anchor,
+  //         focus
+  //       }
+  //     }
+  //   }));
+  // }
 
   showControls() {
     this.setState({
@@ -48,9 +100,25 @@ class Content extends Component {
   }
 
   hideControls() {
-    this.setState({
-      isControlsActive: false
-    });
+    this.setState(state => ({
+      isControlsActive: false,
+      selection: {
+        ...state.selection,
+        text: '',
+        element: {
+          index: '',
+          tag: ''
+        },
+        position: {
+          top: 0,
+          left: 0
+        },
+        offset: {
+          anchor: 0,
+          focus: 0
+        }
+      }
+    }));
   }
 
   componentDidMount() {
@@ -66,13 +134,13 @@ class Content extends Component {
   }
 
   render() {
-    const { text, selects, isControlsActive } = this.state;
+    const { text, selections, color, isControlsActive } = this.state;
 
     return (
       <div className='content container'>
         { isControlsActive && <Controls onBackgroundClick={ this.hideControls } /> }
-        <Main { ...text } mouseListener={ this.mouseListener } />
-        <Sidebar selects={ selects } />
+        <Main { ...text } color={ color } mouseListener={ this.mouseListener } />
+        <Sidebar selections={ selections } />
       </div>
     );
   }

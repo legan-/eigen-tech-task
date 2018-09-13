@@ -9,7 +9,14 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Main', () => {
   describe('component', () => {
-    const component = shallow(<Main />);
+    const props = {
+      header: '',
+      body: [],
+      color: '',
+      mouseListener: () => {}
+    };
+
+    const component = shallow(<Main { ...props } />);
     const componentClassName = 'main';
 
     it(`should have "${ componentClassName }" class name`, () => {

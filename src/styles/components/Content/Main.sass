@@ -1,4 +1,5 @@
 .main
+
   flex: 4
   padding-right: $indent * 2
 
@@ -9,6 +10,12 @@
       letter-spacing: .5px
       margin: 10px 0
 
-.blue
-  ::selection
-    background: rgba(117, 202, 235, 0.4)
+$s-min: 60
+$s-max: 100
+
+$l-min: 40
+$l-max: 60
+
+@for $i from 1 through 20
+  .c-#{ $i }
+    color: hsla(random(360), $s-min + random($s-max+-$s-min), $l-min + random($l-max+-$l-min), .3)

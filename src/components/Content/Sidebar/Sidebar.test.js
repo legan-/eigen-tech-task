@@ -9,7 +9,10 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Sidebar', () => {
   describe('component', () => {
-    const component = shallow(<Sidebar />);
+    const props = {
+      selections: []
+    };
+    const component = shallow(<Sidebar { ...props } />);
     const componentClassName = 'sidebar';
 
     it(`should have "${ componentClassName }" class name`, () => {

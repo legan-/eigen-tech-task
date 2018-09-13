@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 
 import Select from './Select';
 
-const Sidebar = ({ selects = [] }) => (
+const Sidebar = ({ selections }) => (
   <div className='sidebar'>
     User selections:
-    { selects.map((s, i) => <Select key={ i } index={ i } />) }
+    { selections.map((s, i) => <Select key={ i } index={ i } />) }
   </div>
 );
 
 Sidebar.propTypes = {
-  selects: PropTypes.array.isRequired,
+  selections: PropTypes.array.isRequired,
 };
 
 export default Sidebar;

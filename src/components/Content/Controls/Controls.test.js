@@ -9,7 +9,10 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Controls', () => {
   describe('component', () => {
-    const component = shallow(<Controls />);
+    const props = {
+      onBackgroundClick: () => {}
+    };
+    const component = shallow(<Controls { ...props } />);
     const componentClassName = 'controls';
 
     it(`should have "${ componentClassName }" class name`, () => {
