@@ -44,12 +44,18 @@ class Content extends Component {
   }
 
   mouseUpListener() {
-    const selection = window.getSelection();
+    const selection = window.getSelection ? window.getSelection() : document.selection.createRange();
     const selectionLength = selection.toString().length;
     const { anchorNode, focusNode } = selection;
 
     if (selectionLength && anchorNode === focusNode) {
       this.onTextSelected(selection);
+    }
+
+    if (selection.empty) {
+      selection.empty();
+    } else if (selection.removeAllRanges) {
+      selection.removeAllRanges();
     }
   }
 
