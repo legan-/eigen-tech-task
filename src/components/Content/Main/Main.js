@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Main = ({ header, body, color, mouseListener }) => (
-  <div className={ `main ${ color }` } onMouseUp={ () => mouseListener() }>
+  <div className={ `main c-${ color }` } onMouseUp={ () => mouseListener() }>
     <h1>{ header }</h1>
     <div className={ 'text' }>
       { body.map((s, i) => <p key={ i } index={ i }>{ s }</p> ) }
@@ -13,7 +13,7 @@ const Main = ({ header, body, color, mouseListener }) => (
 Main.propTypes = {
   header: PropTypes.string.isRequired,
   body: PropTypes.array.isRequired,
-  color: PropTypes.string.isRequired,
+  color: PropTypes.number.isRequired,
   mouseListener: PropTypes.func.isRequired,
 };
 

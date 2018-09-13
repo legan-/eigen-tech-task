@@ -3,19 +3,17 @@
   flex: 4
   padding-right: $indent * 2
 
-  .text
-    p
-      font-size: 18px
-      font-weight: 300
-      letter-spacing: .5px
-      margin: 10px 0
-
 $s-min: 60
 $s-max: 100
 
 $l-min: 40
 $l-max: 60
 
-@for $i from 1 through 20
+@for $i from 0 through 20
+
+  span.c-#{ $i }
+    background: hsla($i * 18, 80, 50, .3)
+
   .c-#{ $i }
-    color: hsla(random(360), $s-min + random($s-max+-$s-min), $l-min + random($l-max+-$l-min), .3)
+    ::selection
+      background: hsla($i * 18, 80, 50, .3)

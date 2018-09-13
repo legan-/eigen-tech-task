@@ -1,17 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Select from './Select';
+import Selection from './Selection';
 
-const Sidebar = ({ selections }) => (
+const Sidebar = ({ selections, onSelectionRemove }) => (
   <div className='sidebar'>
-    User selections:
-    { selections.map((s, i) => <Select key={ i } index={ i } />) }
+    <div className='header'>
+      User selections:
+    </div>
+    { selections.map((s, i) => <Selection key={ i } { ...s } onSelectionRemove={ onSelectionRemove } />) }
   </div>
 );
 
 Sidebar.propTypes = {
   selections: PropTypes.array.isRequired,
+  onSelectionRemove: PropTypes.func.isRequired,
 };
 
 export default Sidebar;

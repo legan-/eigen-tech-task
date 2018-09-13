@@ -1,4 +1,31 @@
 .sidebar
   background: $background-color
   flex: 2
-  padding: $indent * 2
+  padding: $indent * 2 $indent
+
+  > .header,
+  .selection
+    margin-bottom: $indent
+    padding: 0 $indent
+
+  .header
+    font-family: 'Inconsolata', Arial, sans-serif
+    font-size: 18px
+    letter-spacing: 1px
+
+  .selection
+    cursor: pointer
+    background: $background-color
+    padding-top: $indent / 2
+    padding-bottom: $indent / 2
+    +transition()
+
+    &:hover
+      background: darken($background-color, 10%)
+
+    .label
+      display: inline-block
+      margin-right: 10px
+      border-radius: 12px
+      height: 14px
+      width: 14px

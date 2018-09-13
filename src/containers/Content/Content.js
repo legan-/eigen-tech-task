@@ -17,8 +17,9 @@ class Content extends Component {
         body: [] 
       },
       isControlsActive: false,
-      color: 'c-1',
       selection: {
+        id: 0,
+        color: 0,
         text: '',
         element: {
           index: '',
@@ -33,11 +34,12 @@ class Content extends Component {
           focus: 0
         }
       },
-      selections: []
+      selections: {}
     };
 
     this.mouseListener = this.mouseListener.bind(this);
-    this.hideControls = this.hideControls.bind(this);
+    this.onSelectionRemove = this.onSelectionRemove.bind(this);
+    // this.hideControls = this.hideControls.bind(this);
   }
 
   mouseListener() {
@@ -56,9 +58,31 @@ class Content extends Component {
     // this.showControls();
   }
 
-  addSelection() {
-    /* eslint-disable-next-line no-console */
-    console.log('selection');
+  addSelection(selection) {
+    const data = selection.toString();
+
+    this.setState(state => {
+      const { selection, selections } = state;
+      const { id, color } = selection;
+
+      const obj = {
+        id,
+        color,
+        data,
+      };
+
+      const newId = id + 1;
+      const newColor = color + 1;
+
+      return {
+        selection: {
+          ...selection,
+          id: newId,
+          color: newColor >= 20 ? newColor - 20 : newColor,
+        },
+        selections: Object.assign(selections, { [id]: obj })
+      };
+    });
   }
 
   // initSelection() {
@@ -93,33 +117,44 @@ class Content extends Component {
   //   }));
   // }
 
-  showControls() {
+  onSelectionRemove(i) {
+    const obj = this.state.selections;
+    delete obj[i];
+    /* eslint-disable-next-line no-console */
+    console.log(obj);
+
     this.setState({
-      isControlsActive: true
+      selections: obj
     });
   }
 
-  hideControls() {
-    this.setState(state => ({
-      isControlsActive: false,
-      selection: {
-        ...state.selection,
-        text: '',
-        element: {
-          index: '',
-          tag: ''
-        },
-        position: {
-          top: 0,
-          left: 0
-        },
-        offset: {
-          anchor: 0,
-          focus: 0
-        }
-      }
-    }));
-  }
+  // showControls() {
+  //   this.setState({
+  //     isControlsActive: true
+  //   });
+  // }
+
+  // hideControls() {
+  //   this.setState(state => ({
+  //     isControlsActive: false,
+  //     selection: {
+  //       ...state.selection,
+  //       text: '',
+  //       element: {
+  //         index: '',
+  //         tag: ''
+  //       },
+  //       position: {
+  //         top: 0,
+  //         left: 0
+  //       },
+  //       offset: {
+  //         anchor: 0,
+  //         focus: 0
+  //       }
+  //     }
+  //   }));
+  // }
 
   componentDidMount() {
     const { header, body } = splitText(text);
@@ -134,13 +169,14 @@ class Content extends Component {
   }
 
   render() {
-    const { text, selections, color, isControlsActive } = this.state;
+    const { text, selections, selection, isControlsActive } = this.state;
+    const selectionsArray = Object.values(selections);
 
     return (
       <div className='content container'>
-        { isControlsActive && <Controls onBackgroundClick={ this.hideControls } /> }
-        <Main { ...text } color={ color } mouseListener={ this.mouseListener } />
-        <Sidebar selections={ selections } />
+        { /* isControlsActive && <Controls onBackgroundClick={ this.hideControls } /> */ }
+        <Main { ...text } color={ selection.color } mouseListener={ this.mouseListener } />
+        <Sidebar selections={ selectionsArray } onSelectionRemove={ this.onSelectionRemove } />
       </div>
     );
   }
