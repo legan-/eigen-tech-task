@@ -43,6 +43,7 @@ describe('Content', () => {
       expect(ps).toHaveLength(state.text.body.length);
       expect(ps.at(0).text()).toMatch(state.text.body[0]);
       expect(ps.at(1).text()).toMatch(state.text.body[1]);
+      expect(ps.at(1).text()).toContain('\n');
       expect(ps.at(2).text()).toMatch(state.text.body[2]);
     });
   });

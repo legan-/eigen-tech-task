@@ -12,8 +12,9 @@ describe('Main', () => {
     const props = {
       header: '',
       body: [],
-      color: '',
-      mouseListener: () => {}
+      color: 0,
+      mouseUpListener: () => {},
+      mouseDownListener: () => {}
     };
 
     const component = shallow(<Main { ...props } />);

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { splitText } from '~/src/helpers';
 
-import Controls from '~/src/components/Content/Controls';
+// import Controls from '~/src/components/Content/Controls';
 import Main from '~/src/components/Content/Main';
 import Sidebar from '~/src/components/Content/Sidebar';
 import text from './text';
@@ -37,12 +37,13 @@ class Content extends Component {
       selections: {}
     };
 
-    this.mouseListener = this.mouseListener.bind(this);
+    this.mouseUpListener = this.mouseUpListener.bind(this);
+    this.mouseDownListener = this.mouseDownListener.bind(this);
     this.onSelectionRemove = this.onSelectionRemove.bind(this);
     // this.hideControls = this.hideControls.bind(this);
   }
 
-  mouseListener() {
+  mouseUpListener() {
     const selection = window.getSelection();
     const selectionLength = selection.toString().length;
     const { anchorNode, focusNode } = selection;
@@ -50,6 +51,25 @@ class Content extends Component {
     if (selectionLength && anchorNode === focusNode) {
       this.onTextSelected(selection);
     }
+  }
+
+  mouseDownListener() {
+    this.changeColor();
+  }
+
+  changeColor() {
+    this.setState(state => {
+      const { color } = state.selection;
+
+      const newColor = color + 1;
+
+      return {
+        selection: {
+          ...state.selection,
+          color: newColor >= 20 ? newColor - 20 : newColor,
+        }
+      };
+    });
   }
 
   onTextSelected(selection) {
@@ -72,13 +92,11 @@ class Content extends Component {
       };
 
       const newId = id + 1;
-      const newColor = color + 1;
 
       return {
         selection: {
           ...selection,
           id: newId,
-          color: newColor >= 20 ? newColor - 20 : newColor,
         },
         selections: Object.assign(selections, { [id]: obj })
       };
@@ -120,9 +138,6 @@ class Content extends Component {
   onSelectionRemove(i) {
     const obj = this.state.selections;
     delete obj[i];
-    /* eslint-disable-next-line no-console */
-    console.log(obj);
-
     this.setState({
       selections: obj
     });
@@ -169,14 +184,22 @@ class Content extends Component {
   }
 
   render() {
-    const { text, selections, selection, isControlsActive } = this.state;
+    const { text, selections, selection } = this.state;
     const selectionsArray = Object.values(selections);
 
     return (
       <div className='content container'>
         { /* isControlsActive && <Controls onBackgroundClick={ this.hideControls } /> */ }
-        <Main { ...text } color={ selection.color } mouseListener={ this.mouseListener } />
-        <Sidebar selections={ selectionsArray } onSelectionRemove={ this.onSelectionRemove } />
+        <Main
+          { ...text }
+          color={ selection.color }
+          mouseUpListener={ this.mouseUpListener }
+          mouseDownListener={ this.mouseDownListener }
+        />
+        <Sidebar
+          selections={ selectionsArray }
+          onSelectionRemove={ this.onSelectionRemove }
+        />
       </div>
     );
   }

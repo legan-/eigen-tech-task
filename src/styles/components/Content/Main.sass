@@ -1,19 +1,12 @@
 .main
-
   flex: 4
   padding-right: $indent * 2
 
-$s-min: 60
-$s-max: 100
-
-$l-min: 40
-$l-max: 60
-
 @for $i from 0 through 20
 
-  span.c-#{ $i }
+  span.c-#{ $i },
+  .color-#{ $i } h1::selection,
+  .color-#{ $i } h1:before,
+  .color-#{ $i } p::selection,
+  .color-#{ $i } p:before
     background: hsla($i * 18, 80, 50, .3)
-
-  .c-#{ $i }
-    ::selection
-      background: hsla($i * 18, 80, 50, .3)
