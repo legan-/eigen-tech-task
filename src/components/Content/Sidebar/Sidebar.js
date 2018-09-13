@@ -8,7 +8,9 @@ const Sidebar = ({ selections, onSelectionRemove }) => (
     <div className='header'>
       User selections:
     </div>
-    { selections.map((s, i) => <Selection key={ i } { ...s } onSelectionRemove={ onSelectionRemove } />) }
+    {
+      selections.map((s, i) => <Selection key={ i } { ...s } onSelectionRemove={ onSelectionRemove } />)
+    }
   </div>
 );
 

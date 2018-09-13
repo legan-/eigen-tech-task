@@ -34,17 +34,5 @@ describe('Content', () => {
 
       expect(h1.text()).toMatch(state.text.header);
     });
-
-    it('should display text correctly', () => {
-      component.setState(state);
-
-      const ps = component.find('Main').shallow().find('.text').children('p');
-
-      expect(ps).toHaveLength(state.text.body.length);
-      expect(ps.at(0).text()).toMatch(state.text.body[0]);
-      expect(ps.at(1).text()).toMatch(state.text.body[1]);
-      expect(ps.at(1).text()).toContain('\n');
-      expect(ps.at(2).text()).toMatch(state.text.body[2]);
-    });
   });
 });

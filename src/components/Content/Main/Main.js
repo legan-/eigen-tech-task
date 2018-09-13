@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Paragraph from '../../Paragraph';
+
 const Main = ({ header, body, color, mouseUpListener, mouseDownListener }) => (
   <div
     className={ `main color-${ color }` }
@@ -9,7 +11,9 @@ const Main = ({ header, body, color, mouseUpListener, mouseDownListener }) => (
   >
     <h1>{ header }</h1>
     <div className={ 'text' }>
-      { body.map((s, i) => <p key={ i } index={ i }>{ s }</p> ) }
+      {
+        body.map((text, i) => <Paragraph key={ i } index={ i } text={ text } />)
+      }
     </div>
   </div>
 );

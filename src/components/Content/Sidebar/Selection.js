@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Selection = ({ id, color, data, onSelectionRemove }) => (
+import Paragraph from '../../Paragraph';
+
+const Selection = ({ id, color, text, onSelectionRemove }) => (
   <div className='selection' onClick={ () => onSelectionRemove(id) }>
     <div className='header'>
       <span className={ `label c-${ color }` } />
       Selection { id + 1 }:
     </div>
     <div className='text'>
-      { data }
+      <Paragraph index={ id } text={ text } />
     </div>
   </div>
 );
@@ -16,7 +18,7 @@ const Selection = ({ id, color, data, onSelectionRemove }) => (
 Selection.propTypes = {
   id: PropTypes.number.isRequired,
   color: PropTypes.number.isRequired,
-  data: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
   onSelectionRemove: PropTypes.func.isRequired
 };
 

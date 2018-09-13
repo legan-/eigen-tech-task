@@ -46,9 +46,9 @@ class Content extends Component {
   mouseUpListener() {
     const selection = window.getSelection ? window.getSelection() : document.selection.createRange();
     const selectionLength = selection.toString().length;
-    const { anchorNode, focusNode } = selection;
+    // const { anchorNode, focusNode } = selection;
 
-    if (selectionLength && anchorNode === focusNode) {
+    if (selectionLength) {
       this.onTextSelected(selection);
     }
 
@@ -85,7 +85,7 @@ class Content extends Component {
   }
 
   addSelection(selection) {
-    const data = selection.toString();
+    const text = selection.toString();
 
     this.setState(state => {
       const { selection, selections } = state;
@@ -94,7 +94,7 @@ class Content extends Component {
       const obj = {
         id,
         color,
-        data,
+        text,
       };
 
       const newId = id + 1;
