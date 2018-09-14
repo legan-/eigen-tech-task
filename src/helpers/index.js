@@ -4,20 +4,22 @@ export const date = {
 
 export const splitText = text => {
   const initial = {
-    header: '',
-    body: []
+    h1: {},
+    p: {}
   };
+
+  const obj = (text, id) => ({
+    id,
+    text,
+    offsets: {}
+  });
 
   const splitted = text.split('\n\n');
 
-  splitted.forEach((str, i) => {
-    if (i === 0) {
-      // eslint-disable-next-line no-console
+  splitted.forEach((text, i) => {
+    const base = i === 0 ? initial.h1 : initial.p;
 
-      initial.header = str;
-    } else {
-      initial.body.push(str);
-    }
+    Object.assign(base, { [i]: obj(text, i) });
   });
 
   return initial;

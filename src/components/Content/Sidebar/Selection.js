@@ -6,7 +6,7 @@ import Paragraph from '../../Paragraph';
 const Selection = ({ id, color, text, onSelectionRemove }) => (
   <div className='selection' onClick={ () => onSelectionRemove(id) }>
     <div className='header'>
-      <span className={ `label c-${ color }` } />
+      <span className={ `label color-${ color }` } />
       Selection { id + 1 }:
     </div>
     <div className='text'>

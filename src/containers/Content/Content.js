@@ -12,9 +12,9 @@ class Content extends Component {
     super();
 
     this.state = {
-      text: {
-        header: '',
-        body: [] 
+      data: {
+        h1: {},
+        p: {}
       },
       selection: {
         id: 0,
@@ -33,14 +33,15 @@ class Content extends Component {
     const selectionLength = selection.toString().length;
 
     if (selectionLength) {
+      this._markText(selection);
       this._saveSelection(selection);
     }
 
-    if (selection.empty) {
-      selection.empty();
-    } else if (selection.removeAllRanges) {
-      selection.removeAllRanges();
-    }
+    // if (selection.empty) {
+    //   selection.empty();
+    // } else if (selection.removeAllRanges) {
+    //   selection.removeAllRanges();
+    // }
   }
 
   mouseDownListener() {
@@ -60,6 +61,67 @@ class Content extends Component {
         }
       };
     });
+  }
+
+  _markText(selection) {
+    const { anchorNode, focusNode, anchorOffset, focusOffset } = selection;
+
+    const findParent = parent => {
+      let x = parent;
+      while (x !== null && (x.localName !== 'p' && x.localName !== 'h1')) {
+        x = x.parentNode;
+      }
+      return x;
+    };
+
+    const setObj = x => {
+      const { attributes, localName } = x;
+      const index = parseInt(attributes.index.value);
+
+      return {
+        tag: localName,
+        index
+      };
+    };
+
+    const anchorWrapper = findParent(anchorNode);
+    const focusWrapper = findParent(focusNode);
+
+    const anchor = setObj(anchorWrapper);
+    const focus = setObj(focusWrapper);
+
+    if (anchor.tag === focus.tag && anchor.index === focus.index) {
+
+      const { tag, index } = anchor;
+
+      this.setState(state => {
+        const { data, selection } = state;
+        const curOffsets = data[tag][index].offsets;
+
+        const offsetObj = offset => ({
+          [offset]: {
+            index: anchorOffset,
+            selectionId: curOffsets[anchorOffset] !== undefined ? [...curOffsets[anchorOffset].selectionId, selection.id] : [selection.id],
+            color: curOffsets[anchorOffset] !== undefined ? [...curOffsets[anchorOffset].color, selection.color] : [selection.color],
+          }
+        });
+
+        const offsets = Object.assign({}, curOffsets, offsetObj(anchorOffset), offsetObj(focusOffset));
+
+        return {
+          data: {
+            ...data,
+            [tag]: {
+              ...data[tag],
+              [index]: {
+                ...data[tag][index],
+                offsets
+              }
+            }
+          }
+        };
+      });
+    }
   }
 
   _saveSelection(selection) {
@@ -96,25 +158,25 @@ class Content extends Component {
   }
 
   componentDidMount() {
-    const { header, body } = splitText(text);
+    const data = splitText(text);
 
-    this.setState(state => ({
-      text: {
-        ...state.text,
-        header,
-        body
-      }
-    }));
+    this.setState({
+      data
+    });
   }
 
   render() {
-    const { text, selections, selection } = this.state;
+    const { data, selections, selection } = this.state;
     const selectionsArray = Object.values(selections);
+    const { h1, p } = data;
+    const h1Array = Object.values(h1);
+    const pArray = Object.values(p);
 
     return (
       <div className='content container'>
         <Main
-          { ...text }
+          h1={ h1Array }
+          p={ pArray }
           color={ selection.color }
           mouseUpListener={ this.mouseUpListener }
           mouseDownListener={ this.mouseDownListener }

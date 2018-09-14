@@ -10,8 +10,8 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('Main', () => {
   describe('component', () => {
     const props = {
-      header: '',
-      body: [],
+      h1: [],
+      p: [],
       color: 0,
       mouseUpListener: () => {},
       mouseDownListener: () => {}

@@ -18,23 +18,33 @@ describe('Helper', () => {
 
     const splittedText = splitText(text);
 
-    it('should should have header and body', () => {
-      expect(Object.keys(splittedText)).toEqual(['header', 'body']);
+    it('should should have "h1" and "p" keys', () => {
+      expect(Object.keys(splittedText)).toEqual(['h1', 'p']);
     });
 
     it('should split text correctly', () => {
-      const { body } = splittedText;
-      expect(body.length).toBe(3);
+      const { p } = splittedText;
+      const paragraphs = Object.values(p);
+      expect(paragraphs).toHaveLength(3);
     });
 
-    it('should have header tag', () => {
-      const { header } = splittedText;
-      expect(header).toContain('Header');
+    it('should have just one header', () => {
+      const { h1 } = splittedText;
+      const header = Object.values(h1);
+      expect(header).toHaveLength(1);
     });
 
-    it('should have paragraph tag', () => {
-      const { body } = splittedText;
-      expect(body[body.length - 1]).toContain('Paragraph 3');
+    it('should have "h1" data', () => {
+      const { h1 } = splittedText;
+      const header = Object.values(h1);
+      expect(header[0].text).toMatch('Header');
+    });
+
+    it('should have "p" data', () => {
+      const { p } = splittedText;
+      const paragraphs = Object.values(p);
+      expect(paragraphs[paragraphs.length - 1].id).toBe(3);
+      expect(paragraphs[paragraphs.length - 1].text).toMatch('Paragraph 3');
     });    
   });
 });
