@@ -13,8 +13,14 @@ class Content extends Component {
 
     this.state = {
       data: {
-        h1: {},
-        p: {}
+        h1: { 
+          text: '',
+          offsets: {}
+        },
+        p: {
+          text: '',
+          offsets: {}
+        }
       },
       selection: {
         id: 0,
@@ -32,7 +38,7 @@ class Content extends Component {
     const selection = window.getSelection ? window.getSelection() : document.selection.createRange();
 
     if (selection.toString().length) {
-      // this._findSelected(selection);
+      this._findSelected(selection);
       this._markText(selection);
       this._saveSelection(selection);
     }
@@ -175,25 +181,32 @@ class Content extends Component {
   }
 
   componentDidMount() {
-    const data = splitText(text);
+    const { h1, p } = splitText(text);
 
-    this.setState({
-      data
-    });
+    this.setState(state => ({
+      data: {
+        h1: {
+          ...state.data.h1,
+          text: h1
+        },
+        p: {
+          ...state.data.p,
+          text: p
+        }
+      }
+    }));
   }
 
   render() {
     const { data, selections, selection } = this.state;
     const selectionsArray = Object.values(selections);
     const { h1, p } = data;
-    const h1Array = Object.values(h1);
-    const pArray = Object.values(p);
 
     return (
       <div className='content container'>
         <Main
-          h1={ h1Array }
-          p={ pArray }
+          h1={ h1 }
+          p={ p }
           color={ selection.color }
           mouseUpListener={ this.mouseUpListener }
           mouseDownListener={ this.mouseDownListener }

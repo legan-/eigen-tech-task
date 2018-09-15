@@ -24,16 +24,16 @@ describe('Paragraph', () => {
       expect(component.prop('id')).toBe(props.index);
     });
 
-    it('should be splitted to strings', () => {
-      expect(component.children()).toHaveLength(3);
-    });
+    // it('should be splitted to strings', () => {
+    //   expect(component.children()).toHaveLength(3);
+    // });
 
-    it('should render <br /> elements', () => {
-      expect(component.render().find('br')).toHaveLength(3);
-    });
+    // it('should render <br /> elements', () => {
+    //   expect(component.render().find('br')).toHaveLength(3);
+    // });
 
-    it('should display text', () => {
-      expect(component.render().text()).toBe(props.text.split('\n').join(''));
-    });
+    // it('should display text', () => {
+    //   expect(component.render().text()).toBe(props.text.split('\n').join(''));
+    // });
   });
 });

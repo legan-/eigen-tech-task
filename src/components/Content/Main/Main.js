@@ -10,20 +10,24 @@ const Main = ({ h1, p, color, mouseUpListener, mouseDownListener }) => (
     onMouseDown={ () => mouseDownListener() }
   >
     {
-      h1.map(data => <Paragraph key={ data.id } type={ 'h1' } { ...data } />)
+      <Paragraph type={ 'h1' } { ...h1 } />
     }
     <div className={ 'text' }>
-      {
-        p.map(data => <Paragraph key={ data.id } type={ 'p' } { ...data } />)
-      }
+      <Paragraph type={ 'p' } { ...p } />
     </div>
   </div>
 );
 
 
 Main.propTypes = {
-  h1: PropTypes.array.isRequired,
-  p: PropTypes.array.isRequired,
+  h1: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    offsets: PropTypes.object.isRequired
+  }).isRequired,
+  p: PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    offsets: PropTypes.object.isRequired
+  }).isRequired,
   color: PropTypes.number.isRequired,
   mouseUpListener: PropTypes.func.isRequired,
   mouseDownListener: PropTypes.func.isRequired,

@@ -22,29 +22,14 @@ describe('Helper', () => {
       expect(Object.keys(splittedText)).toEqual(['h1', 'p']);
     });
 
-    it('should split text correctly', () => {
-      const { p } = splittedText;
-      const paragraphs = Object.values(p);
-      expect(paragraphs).toHaveLength(3);
-    });
-
-    it('should have just one header', () => {
-      const { h1 } = splittedText;
-      const header = Object.values(h1);
-      expect(header).toHaveLength(1);
-    });
-
     it('should have "h1" data', () => {
       const { h1 } = splittedText;
-      const header = Object.values(h1);
-      expect(header[0].text).toMatch('Header');
+      expect(h1).toContain('Header');
     });
 
     it('should have "p" data', () => {
       const { p } = splittedText;
-      const paragraphs = Object.values(p);
-      expect(paragraphs[paragraphs.length - 1].id).toBe(3);
-      expect(paragraphs[paragraphs.length - 1].text).toMatch('Paragraph 3');
+      expect(p).toContain('Paragraph 3');
     });    
   });
 });

@@ -3,19 +3,22 @@ import PropTypes from 'prop-types';
 
 import { cutStr } from '~/src/helpers';
 
-const Paragraph = ({ id, type, text, offsets = {} }) => {
-  const parsedText = Object.keys(offsets).length ? cutStr(text, offsets) : text;
+const Paragraph = ({ type, text, offsets = {}, id }) => {
+  // const parsedText = Object.keys(offsets).length ? cutStr(text, offsets) : text;
 
-  return type === 'h1' ? 
-    <h1 index={ id }>{ parsedText }</h1> :
-    <p index={ id }>{ parsedText }</p>;
+  const format = (x, key) => {
+    const formatted = x.split('\n').map((s, i) => <span key={ i }>{ s }<br /></span>);
+    return type === 'h1' ? <h1 key={ key }>{ formatted }</h1> : <p key={ key }>{ formatted }</p>
+  };
+
+  return text.split('\n\n').map((p, i) => format(p, i));
 };
 
 Paragraph.propTypes = {
-  id: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
-  offsets: PropTypes.object
+  offsets: PropTypes.object,
+  id: PropTypes.number,
 };
 
 export default Paragraph;
