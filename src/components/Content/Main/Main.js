@@ -10,11 +10,11 @@ const Main = ({ h1, p, color, mouseUpListener, mouseDownListener }) => (
     onMouseDown={ () => mouseDownListener() }
   >
     {
-      h1.map(({ id, text }) => <h1 key={ id } index={ id }>{ text }</h1>)
+      h1.map(data => <Paragraph key={ data.id } type={ 'h1' } { ...data } />)
     }
     <div className={ 'text' }>
       {
-        p.map(({ id, text }) => <Paragraph key={ id } index={ id } text={ text } />)
+        p.map(data => <Paragraph key={ data.id } type={ 'p' } { ...data } />)
       }
     </div>
   </div>

@@ -5,7 +5,7 @@ import config from '~/config';
 
 const Footer = () => (
   <footer className='container'>
-    { `©${ date.year() } - ${ config.name }` }
+    { `©${ date().year } - ${ config.name }` }
   </footer>
 );
 

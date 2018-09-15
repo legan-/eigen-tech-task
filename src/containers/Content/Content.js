@@ -30,18 +30,18 @@ class Content extends Component {
 
   mouseUpListener() {
     const selection = window.getSelection ? window.getSelection() : document.selection.createRange();
-    const selectionLength = selection.toString().length;
 
-    if (selectionLength) {
+    if (selection.toString().length) {
+      // this._findSelected(selection);
       this._markText(selection);
       this._saveSelection(selection);
     }
 
-    // if (selection.empty) {
-    //   selection.empty();
-    // } else if (selection.removeAllRanges) {
-    //   selection.removeAllRanges();
-    // }
+    if (selection.empty) {
+      selection.empty();
+    } else if (selection.removeAllRanges) {
+      selection.removeAllRanges();
+    }
   }
 
   mouseDownListener() {
@@ -63,6 +63,16 @@ class Content extends Component {
     });
   }
 
+  // _findSelected(selection) {
+  //   const string = selection.toString();
+  //   const length = string.length;
+
+  //   const start = text.search(string);
+  //   const end = start + length;
+
+  //   debugger;
+  // }
+
   _markText(selection) {
     const { anchorNode, focusNode, anchorOffset, focusOffset } = selection;
 
@@ -75,13 +85,17 @@ class Content extends Component {
     };
 
     const setObj = x => {
-      const { attributes, localName } = x;
-      const index = parseInt(attributes.index.value);
+      if (x !== null) {
+        const { attributes, localName } = x;
+        const index = parseInt(attributes.index.value);
 
-      return {
-        tag: localName,
-        index
-      };
+        return {
+          tag: localName,
+          index
+        };
+      } else {
+        return {};
+      }
     };
 
     const anchorWrapper = findParent(anchorNode);
@@ -95,18 +109,21 @@ class Content extends Component {
       const { tag, index } = anchor;
 
       this.setState(state => {
+
         const { data, selection } = state;
         const curOffsets = data[tag][index].offsets;
 
-        const offsetObj = offset => ({
+        const offsetObj = (offset, isAnchor) => ({
           [offset]: {
-            index: anchorOffset,
-            selectionId: curOffsets[anchorOffset] !== undefined ? [...curOffsets[anchorOffset].selectionId, selection.id] : [selection.id],
-            color: curOffsets[anchorOffset] !== undefined ? [...curOffsets[anchorOffset].color, selection.color] : [selection.color],
+            index: offset,
+            elementId: index,
+            selectionIds: curOffsets[offset] !== undefined ? [...curOffsets[offset].selectionIds, selection.id] : [selection.id],
+            colors: curOffsets[offset] !== undefined ? [...curOffsets[offset].colors, selection.color] : [selection.color],
+            isAnchor
           }
         });
 
-        const offsets = Object.assign({}, curOffsets, offsetObj(anchorOffset), offsetObj(focusOffset));
+        const offsets = Object.assign({}, curOffsets, offsetObj(anchorOffset, true), offsetObj(focusOffset, false));
 
         return {
           data: {

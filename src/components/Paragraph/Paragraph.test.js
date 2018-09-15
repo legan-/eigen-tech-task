@@ -10,7 +10,7 @@ Enzyme.configure({ adapter: new Adapter() });
 describe('Paragraph', () => {
   describe('component', () => {
     const props = {
-      index: 0,
+      id: 0,
       text: 'String 1.\nString 2.\nString 3.',
     };
 
@@ -21,7 +21,7 @@ describe('Paragraph', () => {
     });
 
     it('should have index in attributes', () => {
-      expect(component.prop('index')).toBe(props.index);
+      expect(component.prop('id')).toBe(props.index);
     });
 
     it('should be splitted to strings', () => {

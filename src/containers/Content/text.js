@@ -1,5 +1,4 @@
-export default `
-Google Pixel phones to be unveiled October 4
+export default `Google Pixel phones to be unveiled October 4
 
 The firm may also launch its voice-activated AI home audio speaker, a VR headset and a 4K Chromecast
 

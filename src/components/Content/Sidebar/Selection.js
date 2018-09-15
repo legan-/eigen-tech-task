@@ -10,7 +10,7 @@ const Selection = ({ id, color, text, onSelectionRemove }) => (
       Selection { id + 1 }:
     </div>
     <div className='text'>
-      <Paragraph index={ id } text={ text } />
+      <Paragraph id={ id } type={ 'p' } text={ text } />
     </div>
   </div>
 );

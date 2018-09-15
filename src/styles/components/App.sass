@@ -5,11 +5,19 @@
   justify-content: space-between
 
 .container
-  margin-right: auto;
-  margin-left: auto;
-  padding-left: 15px;
-  padding-right: 15px;
-  width: 100%;
+  display: flex
+  margin-right: auto
+  margin-left: auto
+  padding-left: $indent / 2
+  padding-right: $indent / 2
+  width: 100%
+
+@media (max-width: 767px)
+  .container
+    display: block;
+    min-width: 500px;
+    padding-left: $indent
+    padding-right: $indent
 
 @media (min-width: 768px)
   .container

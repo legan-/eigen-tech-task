@@ -2,11 +2,10 @@
   flex: 4
   padding-right: $indent * 2
 
-@for $i from 0 through 20
+  .text
+    p
+      margin: 0 0 15px
 
-  span.color-#{ $i },
-  .color-#{ $i } h1::selection,
-  .color-#{ $i } h1:before,
-  .color-#{ $i } span::selection,
-  .color-#{ $i } span:before
-    background: hsla($i * 18, 80, 50, .3)
+@media (max-width: 767px)
+  .main
+    padding-right: 0

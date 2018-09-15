@@ -1,6 +1,6 @@
 import expect from 'expect';
 
-import { splitText } from './index';
+import { splitText } from './Content';
 
 describe('Helper', () => {
   describe('parseText', () => {

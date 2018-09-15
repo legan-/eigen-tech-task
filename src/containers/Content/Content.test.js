@@ -1,7 +1,6 @@
 import React from 'react';
 import expect from 'expect';
 import Enzyme, { shallow } from 'enzyme';
-// import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import Content from './Content';
@@ -20,9 +19,7 @@ describe('Content', () => {
     });
 
     it('should display header correctly', () => {
-
-      const h1 = component.find('Main').shallow().find('h1');
-
+      const h1 = component.render().find('h1');
       expect(h1.text()).toMatch(text.split('\n\n')[0]);
     });
   });
