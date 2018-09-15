@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-import { splitText } from '~/src/helpers';
-
-// import Controls from '~/src/components/Content/Controls';
 import Main from '~/src/components/Content/Main';
 import Sidebar from '~/src/components/Content/Sidebar';
 import text from './text';
@@ -12,16 +9,8 @@ class Content extends Component {
     super();
 
     this.state = {
-      data: {
-        h1: { 
-          text: '',
-          offsets: {}
-        },
-        p: {
-          text: '',
-          offsets: {}
-        }
-      },
+      text: '',
+      offsets: {},
       selection: {
         id: 0,
         color: 0
@@ -30,17 +19,17 @@ class Content extends Component {
     };
 
     this.mouseUpListener = this.mouseUpListener.bind(this);
-    this.mouseDownListener = this.mouseDownListener.bind(this);
     this.onSelectionRemove = this.onSelectionRemove.bind(this);
   }
 
   mouseUpListener() {
     const selection = window.getSelection ? window.getSelection() : document.selection.createRange();
+    const string = selection.toString();
 
-    if (selection.toString().length) {
-      this._findSelected(selection);
-      this._markText(selection);
-      this._saveSelection(selection);
+    if (string.length) {
+      this._savePosition(string);
+      this._saveSelection(string);
+      this._changeColor();
     }
 
     if (selection.empty) {
@@ -48,10 +37,6 @@ class Content extends Component {
     } else if (selection.removeAllRanges) {
       selection.removeAllRanges();
     }
-  }
-
-  mouseDownListener() {
-    this._changeColor();
   }
 
   _changeColor() {
@@ -69,86 +54,49 @@ class Content extends Component {
     });
   }
 
-  // _findSelected(selection) {
-  //   const string = selection.toString();
-  //   const length = string.length;
+  _findSelection(string) {
+    const length = string.length;
 
-  //   const start = text.search(string);
-  //   const end = start + length;
+    const start = this.state.text.search(string);
+    const end = start + length;
 
-  //   debugger;
-  // }
-
-  _markText(selection) {
-    const { anchorNode, focusNode, anchorOffset, focusOffset } = selection;
-
-    const findParent = parent => {
-      let x = parent;
-      while (x !== null && (x.localName !== 'p' && x.localName !== 'h1')) {
-        x = x.parentNode;
-      }
-      return x;
+    return {
+      start,
+      end
     };
-
-    const setObj = x => {
-      if (x !== null) {
-        const { attributes, localName } = x;
-        const index = parseInt(attributes.index.value);
-
-        return {
-          tag: localName,
-          index
-        };
-      } else {
-        return {};
-      }
-    };
-
-    const anchorWrapper = findParent(anchorNode);
-    const focusWrapper = findParent(focusNode);
-
-    const anchor = setObj(anchorWrapper);
-    const focus = setObj(focusWrapper);
-
-    if (anchor.tag === focus.tag && anchor.index === focus.index) {
-
-      const { tag, index } = anchor;
-
-      this.setState(state => {
-
-        const { data, selection } = state;
-        const curOffsets = data[tag][index].offsets;
-
-        const offsetObj = (offset, isAnchor) => ({
-          [offset]: {
-            index: offset,
-            elementId: index,
-            selectionIds: curOffsets[offset] !== undefined ? [...curOffsets[offset].selectionIds, selection.id] : [selection.id],
-            colors: curOffsets[offset] !== undefined ? [...curOffsets[offset].colors, selection.color] : [selection.color],
-            isAnchor
-          }
-        });
-
-        const offsets = Object.assign({}, curOffsets, offsetObj(anchorOffset, true), offsetObj(focusOffset, false));
-
-        return {
-          data: {
-            ...data,
-            [tag]: {
-              ...data[tag],
-              [index]: {
-                ...data[tag][index],
-                offsets
-              }
-            }
-          }
-        };
-      });
-    }
   }
 
-  _saveSelection(selection) {
-    const text = selection.toString();
+  _savePosition(string) {
+    const pos = this._findSelection(string);
+
+    this.setState(state => {
+
+      const { offsets, selection } = state;
+      const { id, color } = selection;
+
+      const offsetObj = (offset, isStart) => {
+        const selectionIds = offsets[offset] !== undefined ? [...offsets[offset].selectionIds, id] : [id];
+        const colors = offsets[offset] !== undefined ? [...offsets[offset].colors, color] : [color];
+
+        return {
+          [offset]: {
+            index: offset,
+            selectionIds,
+            colors, 
+            isStart
+          }
+        };
+      };
+
+      return {
+        offsets: Object.assign({}, offsets, offsetObj(pos.start, true), offsetObj(pos.end, false))
+      };
+    });
+  }
+
+  _saveSelection(string) {
+    const pos = this._findSelection(string);
+    const offsets = Object.values(pos);
 
     this.setState(state => {
       const { selection, selections } = state;
@@ -157,7 +105,8 @@ class Content extends Component {
       const obj = {
         id,
         color,
-        text,
+        text: string,
+        offsets,
       };
 
       const newId = id + 1;
@@ -181,35 +130,22 @@ class Content extends Component {
   }
 
   componentDidMount() {
-    const { h1, p } = splitText(text);
-
-    this.setState(state => ({
-      data: {
-        h1: {
-          ...state.data.h1,
-          text: h1
-        },
-        p: {
-          ...state.data.p,
-          text: p
-        }
-      }
-    }));
+    this.setState({
+      text
+    });
   }
 
   render() {
-    const { data, selections, selection } = this.state;
+    const { text, offsets, selections, selection } = this.state;
     const selectionsArray = Object.values(selections);
-    const { h1, p } = data;
 
     return (
       <div className='content container'>
         <Main
-          h1={ h1 }
-          p={ p }
+          text={ text }
+          offsets={ offsets }
           color={ selection.color }
           mouseUpListener={ this.mouseUpListener }
-          mouseDownListener={ this.mouseDownListener }
         />
         <Sidebar
           selections={ selectionsArray }

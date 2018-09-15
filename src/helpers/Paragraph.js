@@ -7,12 +7,14 @@ export const cutStr = (str, offsets) => {
   const offsetIntKeysWithZero = [...offsetIntKeys];
   if (offsetIntKeysWithZero[0] !== 0) offsetIntKeysWithZero.unshift(0);
 
-  return offsetIntKeysWithZero
-    .map((offset, i) => splitStr(str, offsetIntKeysWithZero, offset, i))
+  const q = offsetIntKeysWithZero
+    .map((offset, i) => splitStrByOffsets(str, offsetIntKeysWithZero, offset, i))
     .map((substring, i) => rebuildStr(offsets, offsetIntKeysWithZero[i], substring, i));
+
+  return q;
 };
 
-const splitStr = (str, offsetKeys, offset, i) => {
+const splitStrByOffsets = (str, offsetKeys, offset, i) => {
   const nextOffset = offsetKeys[i + 1];
   const isLast = nextOffset === undefined;
 

@@ -13,7 +13,6 @@ describe('Content', () => {
     const component = shallow(<Content />);
     const componentClassName = 'content';
 
-
     it(`should have "${ componentClassName }" class name`, () => {
       expect(component.hasClass(componentClassName)).toBe(true);
     });
