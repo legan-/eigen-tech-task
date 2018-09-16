@@ -4,7 +4,7 @@ import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 import Content from './Content';
-import text from './text';
+import api from '~/src/api';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -17,9 +17,8 @@ describe('Content', () => {
       expect(component.hasClass(componentClassName)).toBe(true);
     });
 
-    it('should display header correctly', () => {
-      const h1 = component.render().find('h1');
-      expect(h1.text()).toMatch(text.split('\n\n')[0]);
+    it('should display text correctly', () => {
+      expect(component.render().text()).toContain(api.text().split('\n\n')[0]);
     });
   });
 });

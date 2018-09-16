@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Main from '~/src/components/Content/Main';
 import Sidebar from '~/src/components/Content/Sidebar';
-import text from './text';
+import api from '~/src/api';
 
 class Content extends Component {
   constructor() {
@@ -57,7 +57,8 @@ class Content extends Component {
   _findSelection(string) {
     const length = string.length;
 
-    const start = this.state.text.search(string);
+    const regexp = new RegExp(string.modify(), 'g');
+    const start = this.state.text.modify().search(regexp);
     const end = start + length;
 
     return {
@@ -72,16 +73,14 @@ class Content extends Component {
     this.setState(state => {
 
       const { offsets, selection } = state;
-      const { id, color } = selection;
+      const { color } = selection;
 
       const offsetObj = (offset, isStart) => {
-        const selectionIds = offsets[offset] !== undefined ? [...offsets[offset].selectionIds, id] : [id];
         const colors = offsets[offset] !== undefined ? [...offsets[offset].colors, color] : [color];
 
         return {
           [offset]: {
             index: offset,
-            selectionIds,
             colors, 
             isStart
           }
@@ -122,14 +121,23 @@ class Content extends Component {
   }
 
   onSelectionRemove(i) {
-    const obj = this.state.selections;
-    delete obj[i];
+    const { selections, offsets } = this.state;
+
+    const offsetIds = selections[i].offsets;
+
+    delete selections[i];
+    delete offsets[offsetIds[0]];
+    delete offsets[offsetIds[1]];
+
     this.setState({
-      selections: obj
+      selections,
+      offsets
     });
   }
 
   componentDidMount() {
+    const text = api.text().replace(/\n+/gi, ' ');
+
     this.setState({
       text
     });

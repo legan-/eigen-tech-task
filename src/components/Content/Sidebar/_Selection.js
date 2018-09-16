@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { format } from '~/src/helpers';
-
 const Selection = ({ id, color, text, onSelectionRemove }) => (
   <div className='selection' onClick={ () => onSelectionRemove(id) }>
     <div className='header'>
@@ -10,7 +8,7 @@ const Selection = ({ id, color, text, onSelectionRemove }) => (
       Selection { id + 1 }:
     </div>
     <div className='text'>
-      { text.split('\n\n').map(format).map(((p, i) => <p key={ i }>{ p }</p>)) }
+      <p>{ text }</p>
     </div>
   </div>
 );

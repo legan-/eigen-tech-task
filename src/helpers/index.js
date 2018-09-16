@@ -1,2 +1,5 @@
 export * from './App';
-export { cutStr } from './Paragraph';
+
+String.prototype.modify = function() {
+  return this.replace(/\(/gi, '<').replace(/\)/gi, '>'); 
+};

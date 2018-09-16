@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Selection from './Selection';
+import Selection from './_Selection';
 
 const Sidebar = ({ selections, onSelectionRemove }) => (
   <div className='sidebar'>

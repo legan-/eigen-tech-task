@@ -13,10 +13,16 @@
       margin: 0 0 15px
       &:last-child
         margin: 0
+      > span
+        mix-blend-mode: multiply
 
 @for $i from 0 through 20
   span.color-#{ $i },
-  .color-#{ $i } h1::selection,
   .color-#{ $i } p::selection,
+  .color-#{ $i } p::after,
   .color-#{ $i } span::selection,
-    background-color: hsla($i * 18, 80, 50, .3)
+  .color-#{ $i } span::after
+    background: hsla($i * 18, 80, 50, .3)
+
+span.color-x
+  background: hsla(0, 0, 60, .3)
