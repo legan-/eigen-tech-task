@@ -1,6 +1,6 @@
 # Coding Test - Eigen Tech
 
-[Example](eigen-tech-task.surge.sh)
+[Example](http://eigen-tech-task.surge.sh/)
 
 ## Description:
 
