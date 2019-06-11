@@ -15,7 +15,7 @@ The app allows to highlight an important parts of the text.
 - Webpack
 - npm
 
-## Installing:
+## Installation:
 
 `git clone git@github.com:legan-/eigen-tech-task.git`
 \
